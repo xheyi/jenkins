@@ -1,0 +1,11 @@
+{
+  "name": "simple-node-jenkins-app",
+  "version": "1.0.0",
+  "description": "Simple Node.js app for Jenkins pipeline practice",
+  "main": "app.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
