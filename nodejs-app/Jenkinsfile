@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    stages {
+        stage('checkout') {
+            steps {
+                echo "checking out code from the scm..."
+                git url: 'https://github.com/xheyi/jenkins.git'
+            }
+        }
+
+        stage('build') {
+            steps {
+                dir('nodejs-app') {
+                    echo 'installing application...'
+                    sh 'npm install'
+                }
+            }
+        }
+        
+        stage('test') {
+            steps {
+                dir('nodejs-app') {
+                    echo 'Running tests...'
+                    sh 'npm test'
+                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                dir('nodejs-app') {
+                    echo 'deploying to server...'
+                    sh 'chmod +x deploy.sh'
+                    sh './deploy.sh'
+                }
+            }
+        }
+
+        post {
+            success {
+                echo 'pipeline successful and application deployed'
+            }
+
+            failure {
+                echo 'pipeline failed'
+            }
+        }
+    }
+}
