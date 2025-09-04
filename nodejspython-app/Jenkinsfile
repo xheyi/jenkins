@@ -7,7 +7,7 @@ pipeline {
                 docker { image 'node:18'}
             }
             steps {
-                dir('nodejspython-app/anothernodejs') {
+                dir('nodejspython-app/anothernodejs-app') {
                     echo 'building nodejs app...'
                     sh 'node --version'
                     sh 'npm install'
