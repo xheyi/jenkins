@@ -25,9 +25,13 @@ pipeline {
             steps {
                 dir('nodejspython-app/python-app') {
                     echo 'building python app'
-                    sh 'python --version'
-                    sh 'pip install --no-cache-dir --disable-pip-version-check --ignore-installed --root-user-action=ignore -r requirements.txt'
-                    sh 'pytest'
+                    sh '''
+                        python --version
+                        python -m venv venv
+                        . venv/bin/activate
+                        pip install --no-cache-dir -r requirements.txt
+                        pytest
+                    '''
                 }
             }
         }
