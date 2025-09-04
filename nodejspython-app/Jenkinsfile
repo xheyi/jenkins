@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('build and test nodej.js app') {
             agent {
-                docker { image 'node:18'}
+                docker { image 'node:18-slim'}
             }
             steps {
                 dir('nodejspython-app/anothernodejs-app') {
@@ -20,7 +20,7 @@ pipeline {
 
         stage('building and testing python app') {
             agent {
-                docker { image 'python:3.10'}
+                docker { image 'python:3.10-slim'}
             }
             steps {
                 dir('nodejspython-app/python-app') {
