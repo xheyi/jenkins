@@ -1,0 +1,49 @@
+pipeline {
+    agent none
+
+    stages {
+        stage('build and test nodej.js app') {
+            agent {
+                docker { image 'node:18'}
+            }
+            steps {
+                dir('nodejspython-app/anothernodejs') {
+                    echo 'building nodejs app...'
+                    sh 'node --version'
+                    sh 'npm install'
+                    sh 'npm start'
+                    echo 'testing nodejs app'
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('building and testing python app') {
+            agent {
+                docker { image 'python:3.10'}
+            }
+            steps {
+                dir('nodejspython-app/python-app') {
+                    echo 'building python app'
+                    sh 'python --version'
+                    sh 'pip install -r requirements.txt'
+                    sh 'pytest'
+                }
+            }
+        }
+    }
+    post {
+
+        always {
+            echo 'pipeline finished'
+        }
+
+        success {
+            echo 'this pipeline was successful'
+        }
+
+        failure {
+            echo 'this pipeline failed'
+        }
+    }
+}
